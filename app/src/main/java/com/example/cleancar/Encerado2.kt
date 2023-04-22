@@ -1,16 +1,15 @@
 package com.example.cleancar
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Switch
 import android.widget.TextView
-import com.example.cleancar.ui.reserva.ReservaFragment
+import com.example.cleancar.databinding.ActivityMenuPrincipalBinding
+//import com.example.cleancar.databinding.ActivityMenuPrincipalBinding
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
-import com.google.firebase.database.core.view.View
-import com.google.firebase.database.ktx.snapshots
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -19,6 +18,9 @@ import com.google.firebase.database.FirebaseDatabase
 
 class Encerado2 : AppCompatActivity() {
     private val encerado = FirebaseDatabase.getInstance().getReference("Servicios/encerado")
+
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var binding: ActivityMenuPrincipalBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,24 +41,60 @@ class Encerado2 : AppCompatActivity() {
             }
         })
     }
+
     private fun save_encerado() {
+        val databaseRef = FirebaseDatabase.getInstance().getReference("Usuarios")
+        firebaseAuth = Firebase.auth
+        val userID = firebaseAuth.currentUser?.uid
+//        val navView: NavigationView = binding.navView
+//        val userID = firebaseAuth.currentUser?.uid
+
+//        val inflater = LayoutInflater.from(this)
+//        val view = inflater.inflate(R.layout.activity_main, null)
+
         val concepto = findViewById<TextView>(R.id.textView40)
         val precio = findViewById<TextView>(R.id.textView33)
+//        val correo = view.findViewById<EditText>(R.id.edtEmail)
 
-        val encerados = Encerados(
-            concepto.text.toString(),
-            precio.text.toString()
-        )
-        encerado.push().setValue(encerados)
+
+//        val bundle = intent.extras
+//        val dato = bundle?.getString("Correo")
+
+
+//        val objetoIntent: Intent=intent
+//        var correo = objetoIntent.getStringExtra("Correo")
+//        val correosave = User("$dato")
+
+
+        databaseRef.child(userID!!).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Obtener los datos del usuario de la base de datos
+                val userMap = dataSnapshot.value as HashMap<*, *>
+//                val nombre = userMap["nombre"].toString()
+                val email = userMap["correoElectronico"].toString()
+
+                // Actualizar los elementos de la interfaz de usuario en la cabecera del menú hamburguesa
+//                val headerView = navView.getHeaderView(0)
+//                val txtNombre = findViewById<TextView>(R.id.txtNombreUsuario)
+//                val txtEmail = findViewById<TextView>(R.id.txtEmailUsuario)
+//                txtNombre.text = nombre
+//                txtEmail.text = email
+
+                val encerados = Encerados(
+                    concepto.text.toString(),
+                    precio.text.toString(),
+                    email
+                )
+                encerado.push().setValue(encerados)
+            }
+            override fun onCancelled(error: DatabaseError) {  }
+        })
+
+
     }
 
-//    private fun writeEncerado(encerados: Encerados) {
-//        val text = list_textView.text.toString() + encerados.toString() + "\n"
-//        list_textView.text = text
-//    }
-
-    data class Encerados(val Tipo_Servicio: String = "", val Costo: String = "") {
-        override fun toString() = Tipo_Servicio + "\t" + Costo + "\t"
+    data class Encerados(val Tipo_Servicio: String = "", val Costo: String = "", val Email: String = "") {
+        override fun toString() = Tipo_Servicio + "\t" + Costo + "\t" + Email + "\t"
     }
 
 }

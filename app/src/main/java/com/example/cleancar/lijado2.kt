@@ -4,14 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 
 class lijado2 : AppCompatActivity() {
     private val lijado = FirebaseDatabase.getInstance().getReference("Servicios/lijado")
 
+    private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lijado2)
@@ -33,17 +34,33 @@ class lijado2 : AppCompatActivity() {
     }
 
     private fun save_lijado(){
+        val databaseRef = FirebaseDatabase.getInstance().getReference("Usuarios")
+        firebaseAuth = Firebase.auth
+        val userID = firebaseAuth.currentUser?.uid
+
         val concepto = findViewById<TextView>(R.id.textView15)
         val precio = findViewById<TextView>(R.id.textView56)
 
-        val lijados = Lijado(
-            concepto.text.toString(),
-            precio.text.toString()
-        )
-        lijado.push().setValue(lijados)
+        databaseRef.child(userID!!).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Obtener los datos del usuario de la base de datos
+                val userMap = dataSnapshot.value as HashMap<*, *>
+//                val nombre = userMap["nombre"].toString()
+                val email = userMap["correoElectronico"].toString()
+
+                val lijados = Lijado(
+                    concepto.text.toString(),
+                    precio.text.toString(),
+                    email
+                )
+                lijado.push().setValue(lijados)
+
+            }
+            override fun onCancelled(error: DatabaseError) {  }
+        })
     }
 
-    data class Lijado(val Tipo_Servicio: String = "", val Costo: String = ""){
-        override fun toString() = Tipo_Servicio + "\t" + Costo + "\t"
+    data class Lijado(val Tipo_Servicio: String = "", val Costo: String = "", val Email: String = ""){
+        override fun toString() = Tipo_Servicio + "\t" + Costo + "\t" + Email + "\t"
     }
 }

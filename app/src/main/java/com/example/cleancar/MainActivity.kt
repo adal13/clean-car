@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -30,12 +31,17 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseApp.initializeApp(this)
 
+        val inflater = LayoutInflater.from(this)
+        val view = inflater.inflate(R.layout.fragment_reserva, null)
+
         //Declarar accesos directos
         val btingresar: Button =findViewById(R.id.btnIngresar)
         val txtemail: TextView =findViewById(R.id.edtEmail)
         val txtpass: TextView =findViewById(R.id.edtPassword)
         val btnCrear_CuentaNueva:TextView=findViewById(R.id.btnRegistrarCuenta)
         val btnRecordar: TextView = findViewById(R.id.btnOlvidar)
+
+        val btnEncerado:Button = view.findViewById(R.id.btnEncerado)
 
 
         //inicializamos firebase
@@ -56,6 +62,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(baseContext,"Ingresa tu Email y Contraseña",
                     Toast.LENGTH_SHORT).show()
             }
+
+
         }
         //esta funcion es para crear cuenta nueva
         btnCrear_CuentaNueva.setOnClickListener()
@@ -70,6 +78,14 @@ class MainActivity : AppCompatActivity() {
         {
             val i = Intent(this,RecuperarPassActivity::class.java)
             startActivity(i)
+        }
+
+        //Enviar datos
+        btnEncerado.setOnClickListener {
+            var correo = txtemail.text.toString()
+            val intent = Intent(this, Encerado2::class.java)
+            intent.putExtra("Correo", correo)
+            startActivity(intent)
         }
     }
 
