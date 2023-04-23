@@ -20,7 +20,10 @@ class pulido2 : AppCompatActivity() {
 
         val btn_pulido = findViewById<Button>(R.id.button3)
 
-        btn_pulido.setOnClickListener{ save_pulido() }
+        btn_pulido.setOnClickListener{
+            save_pulido()
+            finish()
+        }
 
         pulido.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(databaseError: DatabaseError) {}

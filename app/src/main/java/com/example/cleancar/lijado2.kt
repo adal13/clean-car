@@ -20,7 +20,10 @@ class lijado2 : AppCompatActivity() {
 
         val btn_lijado = findViewById<Button>(R.id.button5)
 
-        btn_lijado.setOnClickListener { save_lijado() }
+        btn_lijado.setOnClickListener {
+            save_lijado()
+            finish()
+        }
 
         lijado.addChildEventListener(object : ChildEventListener{
             override fun onCancelled(databaseError: DatabaseError) {}

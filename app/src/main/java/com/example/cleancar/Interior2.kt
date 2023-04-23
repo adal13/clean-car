@@ -20,7 +20,10 @@ class Interior2 : AppCompatActivity() {
 
         val btn_interior = findViewById<Button>(R.id.button8)
 
-        btn_interior.setOnClickListener{ save_pulido() }
+        btn_interior.setOnClickListener{
+            save_pulido()
+            finish()
+        }
 
         interior.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(databaseError: DatabaseError) {}

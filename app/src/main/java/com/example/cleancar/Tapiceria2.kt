@@ -23,7 +23,10 @@ class Tapiceria2 : AppCompatActivity() {
 
         val btn_tapiceria = findViewById<Button>(R.id.button7)
 
-        btn_tapiceria.setOnClickListener{ save_tapiceria() }
+        btn_tapiceria.setOnClickListener{
+            save_tapiceria()
+            finish()
+        }
 
         tapiceria.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(databaseError: DatabaseError) {}

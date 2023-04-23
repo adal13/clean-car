@@ -20,7 +20,10 @@ class lavado2 : AppCompatActivity() {
 
         val btn_lavado = findViewById<Button>(R.id.button)
 
-        btn_lavado.setOnClickListener{ save_lavado() }
+        btn_lavado.setOnClickListener{
+            save_lavado()
+            finish()
+        }
 
         lavado.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(databaseError: DatabaseError) {}

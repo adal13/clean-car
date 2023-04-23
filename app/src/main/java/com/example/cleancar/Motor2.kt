@@ -20,7 +20,10 @@ class Motor2 : AppCompatActivity() {
 
         val btn_motor = findViewById<Button>(R.id.button4)
 
-        btn_motor.setOnClickListener { save_motor() }
+        btn_motor.setOnClickListener {
+            save_motor()
+            finish()
+        }
 
         motor.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(databaseError: DatabaseError) {}

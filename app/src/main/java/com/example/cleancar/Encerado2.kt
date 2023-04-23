@@ -29,7 +29,10 @@ class Encerado2 : AppCompatActivity() {
 
         val btn_encerado = findViewById<Button>(R.id.button2)
 
-        btn_encerado.setOnClickListener { save_encerado() }
+        btn_encerado.setOnClickListener {
+            save_encerado()
+            finish()
+        }
 
         encerado.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(databaseError: DatabaseError) {}

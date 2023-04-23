@@ -20,7 +20,10 @@ class alfombra2 : AppCompatActivity() {
 
         val btn_alfombra = findViewById<Button>(R.id.button6)
 
-        btn_alfombra.setOnClickListener { save_alfombra() }
+        btn_alfombra.setOnClickListener {
+            save_alfombra()
+            finish()
+        }
 
         alfombra.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(databaseError: DatabaseError) {}
