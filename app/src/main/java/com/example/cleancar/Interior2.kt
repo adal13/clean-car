@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
@@ -53,7 +54,7 @@ class Interior2 : AppCompatActivity() {
                     email
                 )
                 interior.push().setValue(interiores)
-
+                Toast.makeText(baseContext, "Servicio Iniciado", Toast.LENGTH_SHORT).show()
             }
             override fun onCancelled(error: DatabaseError) {  }
         })

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.cleancar.databinding.ActivityMenuPrincipalBinding
 //import com.example.cleancar.databinding.ActivityMenuPrincipalBinding
 import com.google.android.material.navigation.NavigationView
@@ -86,6 +87,7 @@ class Encerado2 : AppCompatActivity() {
                     email
                 )
                 encerado.push().setValue(encerados)
+                Toast.makeText(baseContext, "Servicio Iniciado", Toast.LENGTH_SHORT).show()
             }
             override fun onCancelled(error: DatabaseError) {  }
         })

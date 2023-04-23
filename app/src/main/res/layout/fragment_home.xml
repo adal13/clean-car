@@ -164,7 +164,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="204dp"
-        android:text="Popular"
+        android:text="Populares"
         android:textColor="#000000"
         android:textSize="25dp"
         android:textStyle="bold"

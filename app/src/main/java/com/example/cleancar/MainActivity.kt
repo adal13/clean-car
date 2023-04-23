@@ -81,12 +81,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Enviar datos
-        btnEncerado.setOnClickListener {
-            var correo = txtemail.text.toString()
-            val intent = Intent(this, Encerado2::class.java)
-            intent.putExtra("Correo", correo)
-            startActivity(intent)
-        }
+//        btnEncerado.setOnClickListener {
+//            var correo = txtemail.text.toString()
+//            val intent = Intent(this, Encerado2::class.java)
+//            intent.putExtra("Correo", correo)
+//            startActivity(intent)
+//        }
     }
 
     //funcion para validar correo y password

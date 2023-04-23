@@ -1,9 +1,13 @@
 package com.example.cleancar
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telecom.Call.Details
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import com.example.cleancar.ui.reserva.ReservaFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
@@ -41,6 +45,8 @@ class Tapiceria2 : AppCompatActivity() {
         val concepto = findViewById<TextView>(R.id.textView47)
         val precio = findViewById<TextView>(R.id.textView71)
 
+        val enviar = findViewById<Button>(R.id.button7)
+
         databaseRef.child(userID!!).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Obtener los datos del usuario de la base de datos
@@ -54,7 +60,7 @@ class Tapiceria2 : AppCompatActivity() {
                     email
                 )
                 tapiceria.push().setValue(tapicerias)
-
+                Toast.makeText(baseContext, "Servicio Iniciado", Toast.LENGTH_SHORT).show()
             }
             override fun onCancelled(error: DatabaseError) {  }
         })
